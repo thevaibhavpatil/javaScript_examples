@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<h2>The XMLHttpRequest Object</h2>
+
+<!-- <form action="">  -->
+<input type="text" id="city" #city>
+<button onclick="showCustomer(city.value)">Submit</button>
+<!-- </form> -->
+<br>
+<div id="txtHint" style="margin-top: 10px">Customer info will be listed here...</div>
+
+<script>
+function showCustomer(city) {
+  console.log(city);
+  // var city = document.getElementById('city').value;
+  console.log(city);
+  var xhttp;    
+  if (city == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+     var responseJson = JSON.parse(this.responseText);
+     var tableData = "<table class='table'> <thead> <tr> <th scope='col'>#</th> <th scope='col'>Name</th> <th scope='col'>username</th> <th scope='col' style='text-align: center'>followingCount</th> </tr> </thead> <tbody>";
+     if (responseJson) {
+      responseJson.result.forEach((element, index) => {
+       console.log('element', element);
+      var tableRow = "<tr> <th scope='row'>"+index+"</th> <td>"+element.name+"</td> <td>"+element['username']+"</td> <td style='text-align: center'>"+element['followingCount']+"</td> </tr>";
+      tableData += tableRow;
+     });
+     }
+     tableData += "</tbody> </table>"
+      
+      document.getElementById("txtHint").innerHTML = tableData;/*  this.responseText; */
+      console.log('this.responseText', this.responseText);
+      
+    }
+  };
+  let url = "http://localhost:5757/api/endUser/getTrendingUsers?city="+city+"&loginUserId=5b372065adc4b216d991f95b&page=0&size=10"
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>

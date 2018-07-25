@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <!-- <script src="main.js"></script> -->
+</head>
+
+<body>
+    <form method='post' action='get_data_from_server.html' id='the_form'>
+        <input type='hidden' value='whatever'>
+    </form>
+
+    <span id='subm' onclick='form_send()'>Submit</span>
+
+    <script type='text/javascript'>
+        function form_send() {
+            f = document.getElementById('the_form');
+            if (f) {
+                f.submit();
+            }
+        }
+    </script>
+</body>
+
+</html>
